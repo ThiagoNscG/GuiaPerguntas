@@ -1,0 +1,52 @@
+<%- include ("partials/header.ejs") %>
+<body onload="afterload()">
+    <%- include ("partials/navbar.ejs") %>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                    <h1><%= pergunta.titulo %></h1>
+            </div>
+            <div class="card-body">
+                <p><%= pergunta.descricao %></p>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-end">
+                    <button id="btnResponder" onclick="enableForm()" class="btn btn-primary">Responder</button>
+                </div>
+                <br>
+                <div id="formAnswer" style="display:none">
+                    <h4>DÊ SUA RESPOSTA</h4>
+                    <form method="post" action="/responder">
+                        <textarea name="corpo" id="corpo" class="form-control" placeholder="Digite aqui sua resposta!" required></textarea>
+                        <br>
+                        <div class="d-flex justify-content-end">
+                        <a href="/" class="btn btn-danger ml-2">Cancelar</a>
+                        <input type="hidden" name="pergunta" value="<%= pergunta.id %>">
+                        <button type="submit" class="btn btn-success ml-2">Enviar</button>
+                        </div>
+                    </form>
+                    <hr>
+                </div>
+                <h4>RESPOSTAS</h4>
+                <hr>
+                <% respostas.forEach(resposta =>{%>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <p><%= resposta.corpo %></p>
+                        </div>
+                    </div>
+                <% })%>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include ("partials/footer.ejs") %>
+<script>
+    var btnResponder = document.getElementById(btnResponder);
+    var formAnswer = document.getElementById("formAnswer");
+    function enableForm() {
+        formAnswer.style.display = "inline"
+    }
+</script>
